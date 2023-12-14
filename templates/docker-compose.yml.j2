@@ -8,11 +8,11 @@ services:
     command: -config.file=/etc/tempo/config.yml
     ports:
       - "{{ tempo_port }}:3200"
-      - "14268:14268"
-      - "3200:3200"
+      - "9095:9095"
       - "4317:4317"
       - "4318:4318"
       - "9411:9411"
+      - "14268:14268"
     volumes:
       - {{ tempo_home }}/tempo.yml:/etc/tempo/config.yml
       - {{ tempo_data }}:/tmp/tempo

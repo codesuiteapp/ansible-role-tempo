@@ -2,7 +2,9 @@
 image_registry_server: "docker.io"
 tempo_image: "grafana/tempo"
 tempo_ver: "latest"
-tempo_port: 3100
+tempo_port: 3200
+backend_type: local
+backend_bucket: s3-sto-traces-data
 
 docker_compose_bin: "docker-compose"
 use_dkr_net: false
