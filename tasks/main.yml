@@ -27,4 +27,4 @@
 - name: Restart tempo
   ansible.builtin.shell: echo success
   notify:
-    Restart loki
+    Restart tempo
