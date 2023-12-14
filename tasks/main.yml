@@ -1,0 +1,30 @@
+---
+- name: Creates directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ adm_user }}"
+    group: "{{ adm_group }}"
+    mode: '0755'
+    force: false
+  with_items:
+    - "{{ tempo_home }}"
+    - "{{ tempo_data }}"
+
+- name: Copy file
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ adm_user }}"
+    group: "{{ adm_group }}"
+    mode: '0644'
+    backup: true
+  with_items:
+    - { src: '.env.j2', dest: '{{ tempo_home }}/.env' }
+    - { src: 'docker-compose.yml.j2', dest: '{{ tempo_home }}/docker-compose.yml' }
+    - { src: 'tempo.yml.yml.j2', dest: '{{ tempo_home }}/tempo.yml.yml' }
+
+- name: Restart tempo
+  ansible.builtin.shell: echo success
+  notify:
+    Restart loki

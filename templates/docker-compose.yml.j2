@@ -1,0 +1,33 @@
+version: "3"
+services:
+  tempo:
+    image: ${DOCKER_IMAGE}
+    container_name: tempo
+    environment:
+      - TZ=Asia/Seoul
+    command: -config.file=/etc/tempo/config.yml
+    ports:
+      - "{{ tempo_port }}:3200"
+      - "14268:14268"
+      - "3200:3200"
+      - "4317:4317"
+      - "4318:4318"
+      - "9411:9411"
+    volumes:
+      - {{ tempo_home }}/tempo.yml:/etc/tempo/config.yml
+      - {{ tempo_data }}:/tmp/tempo
+    restart: unless-stopped
+{% if use_extra_hosts %}
+    extra_hosts:
+    {% for host in extra_hosts %}
+    - {{ host }}
+    {% endfor %}
+{% endif %}
+{% if use_dkr_net %}
+    networks:
+      - {{ dkr_network }}
+
+networks:
+  {{ dkr_network }}:
+    external: true
+{% endif %}

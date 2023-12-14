@@ -1,0 +1,21 @@
+---
+image_registry_server: "docker.io"
+tempo_image: "grafana/tempo"
+tempo_ver: "latest"
+tempo_port: 3100
+
+docker_compose_bin: "docker-compose"
+use_dkr_net: false
+use_traefik: false
+use_traefik_tls: false
+dkr_network: devops_net
+use_extra_hosts: false
+add_etc_host: "10.11.22.10   devops.com"
+
+app_home_dir: /app
+app_data_dir: /data
+
+create_user: false
+adm_user: "appadm"
+adm_group: "appadm"
+adm_uid: "1000"

@@ -1,0 +1,3 @@
+---
+tempo_home: "{{ app_home_dir }}/tempo-docker"
+tempo_data: "{{ app_data_dir }}/tempo"
