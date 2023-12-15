@@ -38,7 +38,7 @@ storage:
       path: /tmp/tempo/wal         # where to store the the wal locally
     local:
       path: /tmp/tempo/blocks
-overrides:
+{# overrides:
   defaults:
     metrics_generator:
-      processors: [service-graphs, span-metrics]
+      processors: [service-graphs, span-metrics] #}
