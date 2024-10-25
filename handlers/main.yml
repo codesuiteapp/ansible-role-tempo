@@ -1,15 +1,24 @@
+---
 - name: Start tempo
   ansible.builtin.command: "{{ docker_compose_bin }} up --detach"
   args:
     chdir: "{{ tempo_home }}"
-  register: result
-  changed_when: result.changed
+  register: start_result
+  changed_when: start_result.rc == 0
 
-- name: Restart tempo
-  ansible.builtin.shell:
-    "{{ docker_compose_bin }} down; {{ docker_compose_bin }} up --detach"
+- name: Stop tempo
+  ansible.builtin.command: "{{ docker_compose_bin }} down"
   args:
     chdir: "{{ tempo_home }}"
-  register: result
-  changed_when: result.changed
+  register: stop_result
+  changed_when: stop_result.rc == 0
+
+- name: Restart tempo
+  ansible.builtin.shell: |
+    {{ docker_compose_bin }} down
+    {{ docker_compose_bin }} up --detach
+  args:
+    chdir: "{{ tempo_home }}"
+  register: restart_result
+  changed_when: restart_result.rc == 0
   ignore_errors: true

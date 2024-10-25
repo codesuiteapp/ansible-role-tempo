@@ -1,17 +1,16 @@
 ---
-- name: Creates directory
+- name: Creates directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ adm_user }}"
     group: "{{ adm_group }}"
     mode: '0755'
-    force: false
-  with_items:
+  loop:
     - "{{ tempo_home }}"
     - "{{ tempo_data }}"
 
-- name: Copy file
+- name: Copy configuration files
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -19,7 +18,7 @@
     group: "{{ adm_group }}"
     mode: '0644'
     backup: true
-  with_items:
+  loop:
     - { src: '.env.j2', dest: '{{ tempo_home }}/.env' }
     - { src: 'docker-compose.yml.j2', dest: '{{ tempo_home }}/docker-compose.yml' }
     - { src: 'tempo.yml.j2', dest: '{{ tempo_home }}/tempo.yml' }
